@@ -1,17 +1,28 @@
-import wsgiref.simple_server
+from http.server import BaseHTTPRequestHandler, HTTPServer
+import time
 
-def application(environ, start_response):
-    response = b"Hello Chiemerie!"
-    status = "200 OK"
-    headers = [("Content-type", "text/html")]
-    start_response(status, headers)
+hostName = "localhost"
+serverPort = 8080
 
-    return[response]
+class MyServer(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-type", "text/html")
+        self.end_headers()
+        self.wfile.write(bytes("<html><head><title>https://pythonbasics.org</title></head>", "utf-8"))
+        self.wfile.write(bytes("<p>Request: %s</p>" % self.path, "utf-8"))
+        self.wfile.write(bytes("<body>", "utf-8"))
+        self.wfile.write(bytes("<p>This web server was created by Manuela Nenganga</p>", "utf-8"))
+        self.wfile.write(bytes("</body></html>", "utf-8"))
 
-if __name__ == "__main__":
-    w_s = wsgiref.simple_server.make_server(
-        host="localhost",
-        port=8022,
-        app=application
-    )
-    w_s.handle_request()
+if __name__ == "__main__":        
+    webServer = HTTPServer((hostName, serverPort), MyServer)
+    print("Server started http://%s:%s" % (hostName, serverPort))
+
+    try:
+        webServer.serve_forever()
+    except KeyboardInterrupt:
+        pass
+
+    webServer.server_close()
+    print("Server stopped.")
