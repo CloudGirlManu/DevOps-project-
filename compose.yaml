@@ -24,11 +24,11 @@ services:
     environment: 
       - FORWARD_HOST=server
       - FORWARD_PORT=80
-      - BASIC_USERNAME=manuela.nenganga
-      - BASIC_PASSWORD=topsecret   
+      - BASIC_USERNAME=REPLACE_ME
+      - BASIC_PASSWORD=REPLACE_ME   
     ports:
       - "80:80"
-      # - "443:443"
+      - "443:443"
     networks:
       - app_network      
 

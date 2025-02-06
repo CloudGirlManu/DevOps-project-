@@ -9,11 +9,10 @@ ENV BASIC_PASSWORD=password
 ENV FORWARD_HOST=google.com
 ENV FORWARD_PORT=80
 
-# COPY .htpasswd /etc/nginx/.htpasswd
 COPY default.conf default.conf
 COPY run.sh ./
 RUN chmod 0755 ./run.sh
 CMD [ "./run.sh" ]
 
-# COPY ./page-not-found.html /var/www/html/page-not-found.html
-# COPY ./ssl/ /etc/ssl/certs/nginx/
+COPY ./page-not-found.html /var/www/html/page-not-found.html
+COPY ./ssl/ /etc/ssl/certs/nginx/
