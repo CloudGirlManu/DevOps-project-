@@ -1,11 +1,9 @@
 
 #!/bin/sh
 
-# mkdir -p /etc/nginx/conf.d
+export BASIC_USERNAME BASIC_PASSWORD FORWARD_HOST FORWARD_PORT
+envsubst '$BASIC_USERNAME $BASIC_PASSWORD $FORWARD_HOST $FORWARD_PORT' < default.conf > /etc/nginx/conf.d/default.conf
 
-
-# nginx config variable injection
-envsubst < default.conf > /etc/nginx/conf.d/default.conf
 
 # htpasswd for basic authentication
 htpasswd -c -b /etc/nginx/.htpasswd $BASIC_USERNAME $BASIC_PASSWORD
